@@ -22,7 +22,7 @@ export default function Navigation() {
                 <div className="flex flex-row items-center gap-5">
                     <NavButton title="HOME" link="/" />
                     <NavButton title="WORKS" link="/works" />
-                    <NavButton title="ALBUMS" link="/gallery" />
+                    <NavButton title="ANIME" link="/gallery" />
                 </div>
                 <Contact />
             </motion.div>
@@ -35,7 +35,7 @@ export default function Navigation() {
             >
                 <NavButton title="HOME" link="/" />
                 <NavButton title="WORKS" link="/works" />
-                <NavButton title="ALBUMS" link="/gallery" />
+                <NavButton title="ANIME" link="/gallery" />
                 <Contact />
             </motion.div>
         </>

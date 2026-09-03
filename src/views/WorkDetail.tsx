@@ -203,7 +203,7 @@ export default function WorkDetail({ id }: Props) {
                 transition={{ duration: 1.2, ease: "easeOut" }}
             >
                 <div className="w-full flex flex-col items-center justify-start gap-[10vh] lg:gap-[15vh] md:pb-[20vh] lg:pb-[25vh]">
-                    {/* Primary slot: YouTube or Image 1 or Hero Card */}
+                    {/* Primary slot: Image 1 or YouTube or Hero Card */}
                     <div className="relative w-[70vw] md:w-[50vw] max-w-4xl aspect-video flex items-center justify-center overflow-hidden border border-white/10 shadow-2xl">
                         <img
                             loading="eager"
@@ -211,18 +211,18 @@ export default function WorkDetail({ id }: Props) {
                             src={data?.bg1 || "/black_bg.webp"}
                             className="absolute inset-0 w-full h-full object-cover"
                         />
-                        {data?.youtube ? (
-                            <Media
-                                src={data.youtube}
-                                alt={data.title}
-                                className="z-10 w-full h-full object-cover"
-                                loading="eager"
-                            />
-                        ) : data?.image1 ? (
+                        {data?.image1 ? (
                             <Media
                                 src={data.image1}
                                 alt={data.title}
                                 className="z-10 w-full h-full object-contain p-[clamp(0.5rem,2vw,1.5rem)] md:p-10"
+                                loading="eager"
+                            />
+                        ) : data?.youtube ? (
+                            <Media
+                                src={data.youtube}
+                                alt={data.title}
+                                className="z-10 w-full h-full object-cover"
                                 loading="eager"
                             />
                         ) : (
@@ -236,6 +236,18 @@ export default function WorkDetail({ id }: Props) {
                             </div>
                         )}
                     </div>
+
+                    {/* Dedicated YouTube Player slot if project has both image1 and youtube */}
+                    {data?.youtube && data?.image1 && (
+                        <div className="relative w-[70vw] md:w-[50vw] max-w-4xl aspect-video flex items-center justify-center overflow-hidden border border-white/10 shadow-2xl bg-black">
+                            <Media
+                                src={data.youtube}
+                                alt={`${data.title} Video Demo`}
+                                className="w-full h-full object-cover"
+                                loading="eager"
+                            />
+                        </div>
+                    )}
 
                     {/* Slot 2: Image 2 if available */}
                     {data?.image2 && (

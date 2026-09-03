@@ -75,7 +75,7 @@ export default function Home() {
                             </div>
                         </div>
 
-                        <div className="text-[clamp(0.8rem,1.2vw,1.5rem)] pl-1 lg:pl-2">
+                        <div className="text-[clamp(0.8rem,1.2vw,1.5rem)] pt-1.5 pl-1 lg:pl-2">
                             {personal.titles.map((title, i) => (
                                 <p key={i}>{title}</p>
                             ))}
@@ -203,7 +203,7 @@ export default function Home() {
                             onMouseEnter={() => set("hover")}
                             onMouseLeave={() => set("default")}
                         >
-                            <span>ALBUMS</span>
+                            <span>ANIME</span>
                             <span>
                                 <svg width="clamp(1rem,1.5vw,2rem)" height="clamp(1rem,1.5vw,2rem)" viewBox="0 0 102 102" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <line x1="0.204656" y1="50.2071" x2="100.205" y2="50.2071" stroke={`${theme === "dark" ? "white" : "#101010cc"}`} strokeWidth="4" />

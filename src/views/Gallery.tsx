@@ -21,14 +21,17 @@ import { portfolioData } from "../data/portfolio";
 
 export default function Gallery() {
     const set = useCursorStore((state) => state.setCursorType);
-    const { socials, personal } = portfolioData;
-    const githubHandle = socials.github ? `@${socials.github.split("/").pop()}` : "@Gallery";
+    const { socials, personal, watchlist } = portfolioData;
+    const githubHandle = socials.github ? `@${socials.github.split("/").pop()}` : "@Watchlist";
 
     const containerRef = useRef(null);
     
     const { scrollYProgress } = useScroll();
 
     const yLeft = useTransform(scrollYProgress, [0, 1], ["0%", "-15%"]);  // faster
+
+    const leftItems = watchlist.filter((_, i) => i % 2 === 0);
+    const rightItems = watchlist.filter((_, i) => i % 2 !== 0);
 
     return (
         <motion.main
@@ -39,7 +42,7 @@ export default function Gallery() {
             transition={{ duration: 1, ease: "easeOut", delay: 0.6 }}
         >
             <div className="w-[80vw] lg:w-[70vw] h-[15vh] sm:landscape:h-[30vh] md:landscape:h-[30vh] lg:landscape:h-[15vh] flex flex-row items-end justify-between">
-                <h1 className="text-[clamp(1rem,1.5vw,2rem)] font-light mb-1">Albums</h1>
+                <h1 className="text-[clamp(1rem,1.5vw,2rem)] font-light mb-1">Anime & Donghua</h1>
                 <a
                     className="flex items-end justify-center text-[clamp(0.8rem,1vw,1.5rem)] font-light mb-1"
                     href={socials.github || "https://github.com"}
@@ -54,6 +57,7 @@ export default function Gallery() {
 
             <div className="w-[80vw] lg:w-[70vw] h-[1px] bg-[#888888aa]"/>
 
+            {/* Desktop / Tablet 2-column layout */}
             <div
                 ref={containerRef}
                 className="hidden md:flex md:flex-row md:pt-[clamp(1rem,7.5vh,3rem)] md:gap-[10vw]"
@@ -62,31 +66,44 @@ export default function Gallery() {
                     style={{ y: yLeft }}
                     className="w-[30vw] flex flex-col gap-[10vh]"
                 >
-                    <Album url="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/48/53/43/485343e3-dd6a-0034-faec-f4b6403f8108/13UMGIM63890.rgb.jpg/592x592bb.webp" title="Abbey Road" artist="The Beatles" load="eager" />
-                    <Album url="https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/82/90/14/829014ad-a301-62ab-bee6-f4cca4457411/mzi.hozudery.jpg/592x592bb.webp" title="Favourite Worst Nightmare" artist="Arctic Monkeys" load={undefined} />
-                    <Album url="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/fd/63/ed/fd63ed6c-178c-7fa9-4844-29a7326bf655/06UMGIM01277.rgb.jpg/592x592bf.webp" title="2001" artist="Dr. Dre" load="eager" />
-                    <Album url="https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/92/b9/62/92b9624d-e9fb-0e4f-f14b-6f1f96c0a3e0/21UM1IM54414.rgb.jpg/592x592bb.webp" title="2014 Forest Hills Drive" artist="J. Cole" load="eager" />
-                    <Album url="https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/31/18/fa/3118fab0-90ea-2ae5-cf6c-bc64054ab9e3/21UMGIM21449.rgb.jpg/592x592bb.webp" title="House of Balloons" artist="The Weeknd" load={undefined} />
+                    {leftItems.map((item, idx) => (
+                        <AnimeCard
+                            key={item.title}
+                            url={item.image}
+                            title={item.title}
+                            type={item.type}
+                            genre={item.genre}
+                            load={idx === 0 ? "eager" : undefined}
+                        />
+                    ))}
                 </motion.div>
 
                 <div className="w-[30vw] flex flex-col gap-[10vh]">
-                    <Album url="https://is1-ssl.mzstatic.com/image/thumb/Video221/v4/7a/4d/aa/7a4daafd-3bf6-1979-1f26-1f07a2b310d6/Jobf0160262-3972-4fdc-986d-2ecfae5b177b-203302941-PreviewImage_Preview_Image_Intermediate_nonvideo_sdr_397528956_2341308086-Time1758049628425.png/592x592bb.webp" title="Wish You Were Here" artist="Pink Floyd" load="lazy" />
-                    <Album url="https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/0d/ae/61/0dae6140-d4af-d0df-eae0-3c92eb392a33/15UMGIM11922.rgb.jpg/592x592bb.webp" title="To Pimp A Butterfly" artist="Kendrick Lamar" load={undefined} />
-                    <Album url="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/b4/13/e9/b413e91d-40aa-a1a8-b8e3-2bacc3b3e222/00606949329020.rgb.jpg/592x592bf.webp" title="The Eminem Show" artist="Eminem" load="lazy" />
-                    <Album url="https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/39/25/2d/39252d65-2d50-b991-0962-f7a98a761271/00602517483507.rgb.jpg/592x592bb.webp" title="Graduation" artist="Kanye West" load={undefined} />
+                    {rightItems.map((item, idx) => (
+                        <AnimeCard
+                            key={item.title}
+                            url={item.image}
+                            title={item.title}
+                            type={item.type}
+                            genre={item.genre}
+                            load={idx === 0 ? "eager" : "lazy"}
+                        />
+                    ))}
                 </div>
             </div>
 
+            {/* Mobile 1-column layout */}
             <div className="md:hidden w-[70vw] flex flex-col pt-[5vh] gap-[10vh]">
-                <Album url="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/48/53/43/485343e3-dd6a-0034-faec-f4b6403f8108/13UMGIM63890.rgb.jpg/592x592bb.webp" title="Abbey Road" artist="The Beatles" load="eager" />
-                <Album url="https://is1-ssl.mzstatic.com/image/thumb/Video221/v4/7a/4d/aa/7a4daafd-3bf6-1979-1f26-1f07a2b310d6/Jobf0160262-3972-4fdc-986d-2ecfae5b177b-203302941-PreviewImage_Preview_Image_Intermediate_nonvideo_sdr_397528956_2341308086-Time1758049628425.png/592x592bb.webp" title="Wish You Were Here" artist="Pink Floyd" load="eager" />
-                <Album url="https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/82/90/14/829014ad-a301-62ab-bee6-f4cca4457411/mzi.hozudery.jpg/592x592bb.webp" title="Favourite Worst Nightmare" artist="Arctic Monkeys" load="eager" />
-                <Album url="https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/0d/ae/61/0dae6140-d4af-d0df-eae0-3c92eb392a33/15UMGIM11922.rgb.jpg/592x592bb.webp" title="To Pimp A Butterfly" artist="Kendrick Lamar" load={undefined} />
-                <Album url="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/fd/63/ed/fd63ed6c-178c-7fa9-4844-29a7326bf655/06UMGIM01277.rgb.jpg/592x592bf.webp" title="2001" artist="Dr. Dre" load={undefined} />
-                <Album url="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/b4/13/e9/b413e91d-40aa-a1a8-b8e3-2bacc3b3e222/00606949329020.rgb.jpg/592x592bf.webp" title="The Eminem Show" artist="Eminem" load={undefined} />
-                <Album url="https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/92/b9/62/92b9624d-e9fb-0e4f-f14b-6f1f96c0a3e0/21UM1IM54414.rgb.jpg/592x592bb.webp" title="2014 Forest Hills Drive" artist="J. Cole" load={undefined} />
-                <Album url="https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/39/25/2d/39252d65-2d50-b991-0962-f7a98a761271/00602517483507.rgb.jpg/592x592bb.webp" title="Graduation" artist="Kanye West" load={undefined} />
-                <Album url="https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/31/18/fa/3118fab0-90ea-2ae5-cf6c-bc64054ab9e3/21UMGIM21449.rgb.jpg/592x592bb.webp" title="House of Balloons" artist="The Weeknd" load={undefined} />
+                {watchlist.map((item, idx) => (
+                    <AnimeCard
+                        key={item.title}
+                        url={item.image}
+                        title={item.title}
+                        type={item.type}
+                        genre={item.genre}
+                        load={idx < 2 ? "eager" : undefined}
+                    />
+                ))}
             </div>
 
             <div className="cursive w-full h-auto overflow-hidden flex items-center justify-center mt-[clamp(3rem,10vh,5rem)] text-[clamp(1rem,1.5vw,2rem)] lg:-translate-x-[5vw] md:-translate-y-[25vh] md:text-[clamp(1.5rem,2vw,2.5rem)] md:font-thin">
@@ -147,23 +164,38 @@ export default function Gallery() {
     )
 }
 
-type Props = {
-    url: string,
-    title: string,
-    artist: string,
-    load: "eager" | "lazy" | undefined,
+type AnimeCardProps = {
+    url: string;
+    title: string;
+    type: "Anime" | "Donghua";
+    genre?: string;
+    load?: "eager" | "lazy" | undefined;
 }
 
-function Album({ url, title, artist, load }: Props) {
+function AnimeCard({ url, title, type, genre, load }: AnimeCardProps) {
     return (
-        <div className="w-full md:w-[30vw] flex flex-col items-start justify-start">
-            <img src={url} alt={title} className="w-full object-contain opacity-[90%]" loading={load} decoding="async" />
-            <h2 className="mt-2 pl-1 text-[clamp(1rem,1.5vw,1.5rem)] font-light w-full mb-1 border-[#888888aa] border-b-[0.3px]">{title}</h2>
-            <div className="w-full flex flex-col items-start justify-start text-[clamp(0.7rem,1.2vw,1.2rem)] font-light">
-                <div className="w-full flex flex-row justify-between border-[#888888aa] border-b-[0.3px]">
-                    <p className="mb-1 text-[#888888] pl-1">Artist</p>
-                    <p className="mb-1 pr-1">{artist}</p>
+        <div className="w-full md:w-[30vw] flex flex-col items-start justify-start group">
+            <div className="w-full aspect-[2/3] overflow-hidden bg-[#101010] border border-[#88888833] flex items-center justify-center">
+                <img
+                    src={url}
+                    alt={title}
+                    className="w-full h-full object-cover opacity-[90%] transition-transform duration-700 ease-out group-hover:scale-105"
+                    loading={load}
+                    decoding="async"
+                />
+            </div>
+            <h2 className="mt-3 pl-1 text-[clamp(1rem,1.5vw,1.5rem)] font-light w-full mb-1 border-[#888888aa] border-b-[0.3px] tracking-wide">{title}</h2>
+            <div className="w-full flex flex-col items-start justify-start text-[clamp(0.7rem,1.2vw,1.2rem)] font-light gap-1">
+                <div className="w-full flex flex-row justify-between border-[#888888aa] border-b-[0.3px] pb-1">
+                    <p className="text-[#888888] pl-1">Category</p>
+                    <p className="pr-1">{type}</p>
                 </div>
+                {genre && (
+                    <div className="w-full flex flex-row justify-between border-[#888888aa] border-b-[0.3px] pb-1">
+                        <p className="text-[#888888] pl-1">Genre</p>
+                        <p className="pr-1 text-neutral-400">{genre}</p>
+                    </div>
+                )}
             </div>
         </div>
     )

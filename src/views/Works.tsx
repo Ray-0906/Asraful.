@@ -49,7 +49,7 @@ export default function Works() {
                                 <Media
                                     src={proj.image1}
                                     alt={proj.title}
-                                    className="w-[35vw] z-10"
+                                    className="w-[35vw] max-h-[85%] object-contain drop-shadow-xl z-10"
                                     loading={idx === 0 ? "eager" : "lazy"}
                                 />
                             ) : (
@@ -89,7 +89,7 @@ export default function Works() {
                                 <Media
                                     src={proj.image1}
                                     alt={proj.title}
-                                    className="w-[60vw] z-10"
+                                    className="w-[60vw] max-h-[85%] object-contain drop-shadow-xl z-10"
                                     loading={idx === 0 ? "eager" : "lazy"}
                                 />
                             ) : (
