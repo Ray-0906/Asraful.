@@ -204,7 +204,9 @@ export default function WorkDetail({ id }: Props) {
             >
                 <div className="w-full flex flex-col items-center justify-start gap-[10vh] lg:gap-[15vh] md:pb-[20vh] lg:pb-[25vh]">
                     {/* Primary slot: Image 1 or YouTube or Hero Card */}
-                    <div className="relative w-[70vw] md:w-[50vw] max-w-4xl aspect-video flex items-center justify-center overflow-hidden border border-white/10 shadow-2xl">
+                    <div className={`relative w-[70vw] md:w-[50vw] max-w-4xl aspect-video flex items-center justify-center overflow-hidden border shadow-2xl transition-colors duration-500 ${
+                        theme === "dark" ? "border-white/10" : "border-black/10"
+                    }`}>
                         <img
                             loading="eager"
                             alt="Background"
@@ -226,11 +228,15 @@ export default function WorkDetail({ id }: Props) {
                                 loading="eager"
                             />
                         ) : (
-                            <div className="z-10 flex flex-col items-center justify-center p-6 text-center backdrop-blur-sm bg-black/40 w-full h-full">
+                            <div className={`z-10 flex flex-col items-center justify-center p-6 text-center backdrop-blur-sm w-full h-full ${
+                                theme === "dark" ? "bg-black/40 text-white" : "bg-white/40 text-black"
+                            }`}>
                                 <span className="text-[clamp(1.2rem,2.5vw,2.5rem)] font-extralight tracking-widest uppercase">
                                     {data?.title}
                                 </span>
-                                <span className="text-[clamp(0.7rem,1.2vw,1.1rem)] font-light text-neutral-400 mt-2">
+                                <span className={`text-[clamp(0.7rem,1.2vw,1.1rem)] font-light mt-2 ${
+                                    theme === "dark" ? "text-neutral-400" : "text-neutral-600"
+                                }`}>
                                     {data?.subtitle}
                                 </span>
                             </div>
@@ -239,7 +245,9 @@ export default function WorkDetail({ id }: Props) {
 
                     {/* Dedicated YouTube Player slot if project has both image1 and youtube */}
                     {data?.youtube && data?.image1 && (
-                        <div className="relative w-[70vw] md:w-[50vw] max-w-4xl aspect-video flex items-center justify-center overflow-hidden border border-white/10 shadow-2xl bg-black">
+                        <div className={`relative w-[70vw] md:w-[50vw] max-w-4xl aspect-video flex items-center justify-center overflow-hidden border shadow-2xl bg-black transition-colors duration-500 ${
+                            theme === "dark" ? "border-white/10" : "border-black/10"
+                        }`}>
                             <Media
                                 src={data.youtube}
                                 alt={`${data.title} Video Demo`}
@@ -251,7 +259,9 @@ export default function WorkDetail({ id }: Props) {
 
                     {/* Slot 2: Image 2 if available */}
                     {data?.image2 && (
-                        <div className="relative w-[70vw] md:w-[50vw] max-w-4xl aspect-video flex items-center justify-center overflow-hidden border border-white/10 shadow-2xl bg-[#151515]">
+                        <div className={`relative w-[70vw] md:w-[50vw] max-w-4xl aspect-video flex items-center justify-center overflow-hidden border shadow-2xl transition-colors duration-500 ${
+                            theme === "dark" ? "border-white/10 bg-[#151515]" : "border-black/10 bg-neutral-100"
+                        }`}>
                             {data?.bg2 && (
                                 <img
                                     loading="eager"
@@ -271,7 +281,9 @@ export default function WorkDetail({ id }: Props) {
 
                     {/* Slot 3: Image 3 if available */}
                     {data?.image3 && (
-                        <div className="relative w-[70vw] md:w-[50vw] max-w-4xl aspect-video flex items-center justify-center overflow-hidden border border-white/10 shadow-2xl">
+                        <div className={`relative w-[70vw] md:w-[50vw] max-w-4xl aspect-video flex items-center justify-center overflow-hidden border shadow-2xl transition-colors duration-500 ${
+                            theme === "dark" ? "border-white/10" : "border-black/10"
+                        }`}>
                             {data?.bg3 && (
                                 <img
                                     alt="Background"
@@ -290,7 +302,9 @@ export default function WorkDetail({ id }: Props) {
 
                     {/* Slot 4: Image 4 if available */}
                     {data?.image4 && (
-                        <div className="relative w-[70vw] md:w-[50vw] max-w-4xl aspect-video flex items-center justify-center overflow-hidden border border-white/10 shadow-2xl bg-[#151515]">
+                        <div className={`relative w-[70vw] md:w-[50vw] max-w-4xl aspect-video flex items-center justify-center overflow-hidden border shadow-2xl transition-colors duration-500 ${
+                            theme === "dark" ? "border-white/10 bg-[#151515]" : "border-black/10 bg-neutral-100"
+                        }`}>
                             {data?.bg4 && (
                                 <img
                                     loading="lazy"

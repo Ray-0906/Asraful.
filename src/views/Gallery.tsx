@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useRef } from "react";
 import { useCursorStore } from "../store/useCursorStore"
+import { useThemeStore } from "../store/useThemeStore"
 
 const item = {
     initial: { y: "1rem", opacity: 0 },
@@ -173,9 +174,12 @@ type AnimeCardProps = {
 }
 
 function AnimeCard({ url, title, type, genre, load }: AnimeCardProps) {
+    const { theme } = useThemeStore();
     return (
         <div className="w-full md:w-[30vw] flex flex-col items-start justify-start group">
-            <div className="w-full aspect-[2/3] overflow-hidden bg-[#101010] border border-[#88888833] flex items-center justify-center">
+            <div className={`w-full aspect-[2/3] overflow-hidden border transition-colors duration-500 flex items-center justify-center ${
+                theme === "dark" ? "bg-[#101010] border-[#88888833]" : "bg-neutral-100 border-[#88888844]"
+            }`}>
                 <img
                     src={url}
                     alt={title}
@@ -193,7 +197,9 @@ function AnimeCard({ url, title, type, genre, load }: AnimeCardProps) {
                 {genre && (
                     <div className="w-full flex flex-row justify-between border-[#888888aa] border-b-[0.3px] pb-1">
                         <p className="text-[#888888] pl-1">Genre</p>
-                        <p className="pr-1 text-neutral-400">{genre}</p>
+                        <p className={`pr-1 transition-colors duration-500 ${
+                            theme === "dark" ? "text-neutral-400" : "text-neutral-600"
+                        }`}>{genre}</p>
                     </div>
                 )}
             </div>

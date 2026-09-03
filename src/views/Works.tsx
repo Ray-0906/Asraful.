@@ -6,9 +6,11 @@ import { useCursorStore } from "../store/useCursorStore";
 import Link from "next/link";
 import { portfolioData, type Project } from "../data/portfolio";
 import Media from "../components/media";
+import { useThemeStore } from "../store/useThemeStore";
 
 export default function Works() {
     const { projects, socials } = portfolioData;
+    const { theme } = useThemeStore();
     const [focus, setFocus] = useState<Project>(projects[0] || {} as Project);
     const set = useCursorStore((state) => state.setCursorType);
 
@@ -34,7 +36,9 @@ export default function Works() {
                     >
                         <Link
                             href={`/works/${proj.id}`}
-                            className="relative w-[40vw] aspect-[2/1] flex items-center justify-center overflow-hidden border border-white/10"
+                            className={`relative w-[40vw] aspect-[2/1] flex items-center justify-center overflow-hidden border transition-colors duration-500 ${
+                                theme === "dark" ? "border-white/10" : "border-black/10"
+                            }`}
                             onMouseEnter={() => set("VIEW")}
                             onMouseLeave={() => set("default")}
                         >
@@ -54,7 +58,9 @@ export default function Works() {
                                 />
                             ) : (
                                 <div className="z-10 text-center px-4">
-                                    <span className="text-[clamp(1rem,2vw,1.8rem)] font-extralight tracking-widest uppercase border border-white/20 px-4 py-2 backdrop-blur-sm bg-black/40">
+                                    <span className={`text-[clamp(1rem,2vw,1.8rem)] font-extralight tracking-widest uppercase border px-4 py-2 backdrop-blur-sm ${
+                                        theme === "dark" ? "border-white/20 bg-black/40 text-white" : "border-black/20 bg-white/40 text-black"
+                                    }`}>
                                         {proj.title}
                                     </span>
                                 </div>
@@ -78,7 +84,9 @@ export default function Works() {
                     >
                         <Link
                             href={`/works/${proj.id}`}
-                            className="relative w-[70vw] aspect-[2/1] flex items-center justify-center overflow-hidden border border-white/10"
+                            className={`relative w-[70vw] aspect-[2/1] flex items-center justify-center overflow-hidden border transition-colors duration-500 ${
+                                theme === "dark" ? "border-white/10" : "border-black/10"
+                            }`}
                         >
                             <img
                                 src={proj.bg1 || "/black_bg.webp"}
@@ -94,7 +102,9 @@ export default function Works() {
                                 />
                             ) : (
                                 <div className="z-10 text-center px-4">
-                                    <span className="text-[clamp(1rem,2vw,1.8rem)] font-extralight tracking-widest uppercase border border-white/20 px-4 py-2 backdrop-blur-sm bg-black/40">
+                                    <span className={`text-[clamp(1rem,2vw,1.8rem)] font-extralight tracking-widest uppercase border px-4 py-2 backdrop-blur-sm ${
+                                        theme === "dark" ? "border-white/20 bg-black/40 text-white" : "border-black/20 bg-white/40 text-black"
+                                    }`}>
                                         {proj.title}
                                     </span>
                                 </div>
