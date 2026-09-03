@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { useCursorStore } from "../store/useCursorStore";
 import ParallaxImage from "../components/parallax-image";
@@ -20,6 +21,7 @@ const item = {
 };
 
 export default function Home() {
+    const [isPhotoColored, setIsPhotoColored] = useState(false);
     const set = useCursorStore((state) => state.setCursorType);
     const { theme } = useThemeStore();
     const { personal, about, motivation, skills, socials } = portfolioData;
@@ -114,14 +116,23 @@ export default function Home() {
                 <div className="w-[80vw] lg:w-[35vw] flex flex-col items-start ml-4 lg:ml-0 justify-start lg:justify-between lg:min-h-[clamp(20rem,60vh,40rem)] mt-12 lg:mt-0">
                     {/* Top of right side: Profile Avatar & Education Card */}
                     <div className="w-full flex flex-row items-center gap-4  mb-2 pt-0">
-                        <div className={`relative w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden border shadow-2xl flex-shrink-0 group transition-colors duration-500 ${
-                            theme === "dark" ? "border-white/10 bg-[#0d0d0d]" : "border-black/10 bg-black/5"
-                        }`}>
+                        <div
+                            onClick={() => setIsPhotoColored((prev) => !prev)}
+                            onMouseEnter={() => set("hover")}
+                            onMouseLeave={() => set("default")}
+                            className={`relative w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden border shadow-2xl flex-shrink-0 group cursor-pointer active:scale-95 transition-all duration-500 select-none ${
+                                theme === "dark" ? "border-white/10 bg-[#0d0d0d]" : "border-black/10 bg-black/5"
+                            }`}
+                        >
                             <img
                                 src="/image.png"
                                 alt={personal.fullName}
-                                className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-115 ${
-                                    theme === "dark" ? "contrast-125" : "contrast-110"
+                                className={`w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-115 active:grayscale-0 group-hover:grayscale-0 ${
+                                    isPhotoColored ? "grayscale-0 scale-105" : "grayscale"
+                                } ${
+                                    theme === "dark"
+                                        ? isPhotoColored ? "contrast-100" : "contrast-125 group-hover:contrast-100"
+                                        : isPhotoColored ? "contrast-100" : "contrast-110 group-hover:contrast-100"
                                 }`}
                             />
                             {/* Active online status dot */}
@@ -173,7 +184,7 @@ export default function Home() {
             >
                 <div className="lg:h-[clamp(20rem,60vh,40rem)] flex flex-col items-start justify-start">
                     <div className="h-[15vh] flex items-end text-[clamp(1rem,1.5vw,2rem)] font-light mb-1">
-                        <h1>MOTIVATION</h1>
+                        <h1>EXPERIENCE</h1>
                     </div>
 
                     <div className="w-[80vw] lg:w-[35vw] h-[1px] bg-[#888888aa]" />
